@@ -154,6 +154,7 @@ REST_FRAMEWORK = {
 }
 #Solo envía la cookie sobre HTTPS
 CSRF_COOKIE_SECURE = False
+SESSION_COOKIE_HTTPONLY = False
 #Previene acceso por JavaScript
 CSRF_COOKIE_HTTPONLY = False
 #1 semana, en segundos
