@@ -153,9 +153,9 @@ REST_FRAMEWORK = {
     ]
 }
 #Solo envía la cookie sobre HTTPS
-CSRF_COOKIE_SECURE = True
+CSRF_COOKIE_SECURE = False
 #Previene acceso por JavaScript
-CSRF_COOKIE_HTTPONLY = True
+CSRF_COOKIE_HTTPONLY = False
 #1 semana, en segundos
 SESSION_COOKIE_AGE = 604800
 
@@ -173,6 +173,7 @@ SPECTACULAR_SETTINGS = {
 #Configuración de CORS
 CORS_ALLOW_CREDENTIALS = True
 CORS_ALLOW_ALL_ORIGINS = True
+CORS_ORIGIN_WHITELIST = ["http://localhost:5173"]
 #CORS_ALLOWED_ORIGINS = [os.getenv("CORS_ALLOWED_ORIGINS"),]
 
 #Configuración de Cloudinay
