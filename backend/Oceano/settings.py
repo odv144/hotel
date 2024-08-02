@@ -166,13 +166,13 @@ SPECTACULAR_SETTINGS = {
 
 #Configuración de CORS
 CORS_ALLOW_CREDENTIALS = True
-CORS_ALLOW_ALL_ORIGINS =  [
+CORS_ALLOW_ALL_ORIGINS = True 
+CORS_ORIGIN_WHITELIST = ["http://localhost:5173"]
+CORS_ALLOWED_ORIGINS = [
     "http://localhost:5173",  # Ajusta según tu puerto local
     "https://hotel-ey89.onrender.com",
     "https://hotel-oceano.onrender.com"
 ]
-CORS_ORIGIN_WHITELIST = ["http://localhost:5173"]
-#CORS_ALLOWED_ORIGINS = [os.getenv("CORS_ALLOWED_ORIGINS"),]
 
 #Configuración de Cloudinay
 CLOUDINARY_STORAGE = {
