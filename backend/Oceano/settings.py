@@ -81,21 +81,14 @@ WSGI_APPLICATION = 'Oceano.wsgi.application'
 
 DATABASES = {
     "default": {
-        "ENGINE": "django.db.backends.sqlite3",
-        "NAME": "db.sqlite3",
-            }
-    }
-""" Para procuccion
-    "default": {
         "ENGINE": "django.db.backends.postgresql",
         "NAME": os.getenv("DB_NAME"),
         "USER": os.getenv("DB_USER"),
         "PASSWORD": os.getenv("DB_PASSWORD"),
         "HOST": os.getenv("DB_HOST"),
         "PORT": "5432",
-    } """
-    
-
+    }    
+}
 
 
 # Password validation
@@ -153,9 +146,10 @@ REST_FRAMEWORK = {
     ]
 }
 #Solo envía la cookie sobre HTTPS
-CSRF_COOKIE_SECURE = True
+CSRF_COOKIE_SECURE = False
+SESSION_COOKIE_HTTPONLY = False
 #Previene acceso por JavaScript
-CSRF_COOKIE_HTTPONLY = True
+CSRF_COOKIE_HTTPONLY = False
 #1 semana, en segundos
 SESSION_COOKIE_AGE = 604800
 
@@ -172,8 +166,11 @@ SPECTACULAR_SETTINGS = {
 
 #Configuración de CORS
 CORS_ALLOW_CREDENTIALS = True
-CORS_ALLOW_ALL_ORIGINS = True
-#CORS_ALLOWED_ORIGINS = [os.getenv("CORS_ALLOWED_ORIGINS"),]
+#CORS_ALLOW_ALL_ORIGINS = True 
+CORS_ALLOWED_ORIGINS = [
+    "http://localhost:5173",  # Ajusta según tu puerto local
+    "https://hotel-rama-omar3.vercel.app"
+]
 
 #Configuración de Cloudinay
 CLOUDINARY_STORAGE = {
