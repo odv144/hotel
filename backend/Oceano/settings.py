@@ -169,8 +169,7 @@ CORS_ALLOW_CREDENTIALS = True
 #CORS_ALLOW_ALL_ORIGINS = True 
 CORS_ALLOWED_ORIGINS = [
     "http://localhost:5173",  # Ajusta según tu puerto local
-    "https://hotel-ey89.onrender.com",
-    "https://hotel-oceano.onrender.com"
+    "https://hotel-rama-omar3.vercel.app"
 ]
 
 #Configuración de Cloudinay
