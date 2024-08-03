@@ -53,7 +53,7 @@ export const UsuarioProvider = ({ children }) => {
       );
       console.log(response.data);
       console.log(document.cookie);
-      console.log(Cookies.get('csrftoken'));
+      console.log(Cookies.get('csrftoken'),{path:apiUrl});
       const data = {
         "username": userData.usuario,
         "password": userData.password,
@@ -77,7 +77,7 @@ export const UsuarioProvider = ({ children }) => {
     try {
       console.log(document.cookie);
 
-      const cookieValue = Cookies.get("csrftoken", { path: "/" });
+      const cookieValue = Cookies.get("csrftoken", { path: apiUrl });
       console.log("cookieValue" + cookieValue);
       const response = await axiosInstance.post(
         "/api-auth/logout-view/",
