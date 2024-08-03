@@ -87,8 +87,9 @@ DATABASES = {
         "PASSWORD": os.getenv("DB_PASSWORD"),
         "HOST": os.getenv("DB_HOST"),
         "PORT": "5432",
-    }    
+    }
 }
+
 
 
 # Password validation
@@ -145,11 +146,11 @@ REST_FRAMEWORK = {
         'rest_framework.authentication.SessionAuthentication',
     ]
 }
+#CSRF_TRUSTED_ORIGINS = ['https://hotel-oceano.onrender.com']
 #Solo envía la cookie sobre HTTPS
-CSRF_COOKIE_SECURE = False
-SESSION_COOKIE_HTTPONLY = False
-#Previene acceso por JavaScript
-CSRF_COOKIE_HTTPONLY = False
+CSRF_COOKIE_SECURE = True
+#Previene acceso por JavaScript solo dejo esta en false 
+CSRF_COOKIE_HTTPONLY = True
 #1 semana, en segundos
 SESSION_COOKIE_AGE = 604800
 
@@ -166,11 +167,8 @@ SPECTACULAR_SETTINGS = {
 
 #Configuración de CORS
 CORS_ALLOW_CREDENTIALS = True
-#CORS_ALLOW_ALL_ORIGINS = True 
-CORS_ALLOWED_ORIGINS = [
-    "http://localhost:5173",  # Ajusta según tu puerto local
-    "https://hotel-rama-omar3.vercel.app"
-]
+#CORS_ALLOW_ALL_ORIGINS = True
+CORS_ALLOWED_ORIGINS = [os.getenv("CORS_ALLOWED_ORIGINS"),]
 
 #Configuración de Cloudinay
 CLOUDINARY_STORAGE = {

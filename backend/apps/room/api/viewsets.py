@@ -7,7 +7,7 @@ from drf_spectacular.utils import extend_schema, OpenApiParameter, OpenApiExampl
 from drf_spectacular.types import OpenApiTypes 
 from .serializers import RoomStatusSerializer, PhotoSerializer, RoomTypeSerializer, RoomSerializer
 from ..models import RoomStatus, RoomPhoto, RoomType, Room
-
+from .permissions import IsAuthenticatedOrGetOnly
 
 class RoomStatusViewSet(ModelViewSet):
     serializer_class = RoomStatusSerializer
@@ -41,7 +41,7 @@ class PhotoViewSet(ModelViewSet):
     queryset = RoomPhoto.active_objects.all()
     parser_classes = (MultiPartParser, FormParser)
     http_method_names = ['get', 'post', 'delete']
-    permission_classes = [IsAuthenticated]
+    permission_classes = [IsAuthenticatedOrGetOnly]
     
     @extend_schema(
     description=('logical deletion of the Service model'))
@@ -55,7 +55,7 @@ class PhotoViewSet(ModelViewSet):
 class RoomTypeViewSet(ModelViewSet):
     serializer_class = RoomTypeSerializer
     queryset = RoomType.active_objects.all()
-    permission_classes = [IsAuthenticated]
+    permission_classes = [IsAuthenticatedOrGetOnly]
     
     @extend_schema(
     description=('logical deletion of the RoomType model'))
