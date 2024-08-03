@@ -148,9 +148,9 @@ REST_FRAMEWORK = {
 }
 #CSRF_TRUSTED_ORIGINS = ['https://hotel-oceano.onrender.com']
 #Solo envía la cookie sobre HTTPS
-CSRF_COOKIE_SECURE = True
+CSRF_COOKIE_SECURE = False
 #Previene acceso por JavaScript solo dejo esta en false 
-CSRF_COOKIE_HTTPONLY = True
+CSRF_COOKIE_HTTPONLY = False
 #1 semana, en segundos
 SESSION_COOKIE_AGE = 604800
 
