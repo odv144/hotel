@@ -29,11 +29,13 @@ import {
   ModalBody,
   ModalFooter,
   useDisclosure,
+  Heading,
 } from "@chakra-ui/react";
 import HabitacionField from "./HabitacionField";
 import { MinusIcon, PlusSquareIcon } from "@chakra-ui/icons";
 import axios from "axios";
 import { HabitacionContext } from "../../context/HabitacionContext";
+import ExitoModal from "../admin/ExitoModal";
 
 export const FormConsulta = () => {
 
@@ -84,8 +86,6 @@ export const FormConsulta = () => {
   };
   const handleSubmit = async (values, { setSubmitting }) => {
     try {
-      
-
       const formattedData = {
         client: {
           is_company: values.tipoReserva === "empresa",
@@ -135,6 +135,7 @@ export const FormConsulta = () => {
       );
     
       // Aquí puedes manejar la respuesta exitosa, por ejemplo, mostrar un mensaje al usuario
+     
       setSubmissionStatus('success');
       onOpen(); // 
     } catch (error) {
@@ -154,7 +155,9 @@ export const FormConsulta = () => {
     return Math.ceil(diferencia / (1000 * 3600 * 24));
   };
   return (
+    
     <Center bg="secondary.200" paddingTop={"10px"}>
+    
       <Formik
         initialValues={{
           nombre: "",
@@ -181,13 +184,28 @@ export const FormConsulta = () => {
       >
         {(props) => (
           <Form variants="nuevo">
+              <Text 
+              fontSize={'1.5em'}
+              fontWeight={900}
+              my={'1%'}
+              >Formulario de Consultas</Text>
             <VStack spacing={4} align="stretch">
+              <Box 
+              border={'2px solid'}
+              borderColor={'secondary.600'}
+              p={5}
+              borderRadius={15}
+              boxShadow={'5px 5px 5px black'}
+              >
+                <Heading as='h2' fontSize={'1.2em'} >Información Personal</Heading>
+                            
               <Field name="nombre">
                 {({ field, form }) => (
                   <FormControl
                     isInvalid={form.errors.nombre && form.touched.nombre}
+                    isRequired
                   >
-                    <FormLabel htmlFor="nombre">Nombre <Text display={'inline-block'}color={'red'}>*</Text></FormLabel>
+                    <FormLabel htmlFor="nombre">Nombre</FormLabel>
                     <Input
                       {...field}
                       id="nombre"
@@ -202,8 +220,9 @@ export const FormConsulta = () => {
                 {({ field, form }) => (
                   <FormControl
                     isInvalid={form.errors.apellido && form.touched.apellido}
+                    isRequired
                   >
-                    <FormLabel htmlFor="apellido">Apellido <Text display={'inline-block'}color={'red'}>*</Text></FormLabel>
+                    <FormLabel htmlFor="apellido">Apellido</FormLabel>
                     <Input
                       {...field}
                       id="apellido"
@@ -218,8 +237,9 @@ export const FormConsulta = () => {
                 {({ field, form }) => (
                   <FormControl
                     isInvalid={form.errors.email && form.touched.email}
+                    isRequired
                   >
-                    <FormLabel htmlFor="email">Email <Text display={'inline-block'}color={'red'}>*</Text></FormLabel>
+                    <FormLabel htmlFor="email">Email</FormLabel>
                     <Input
                       {...field}
                       id="email"
@@ -235,8 +255,9 @@ export const FormConsulta = () => {
                 {({ field, form }) => (
                   <FormControl
                     isInvalid={form.errors.telefono && form.touched.telefono}
+                    isRequired
                   >
-                    <FormLabel htmlFor="telefono">Teléfono <Text display={'inline-block'}color={'red'}>*</Text></FormLabel>
+                    <FormLabel htmlFor="telefono">Teléfono </FormLabel>
                     <Input
                       {...field}
                       id="telefono"
@@ -247,14 +268,25 @@ export const FormConsulta = () => {
                   </FormControl>
                 )}
               </Field>
+              </Box>
+
+              <Box 
+              border={'2px solid'}
+              borderColor={'secondary.600'}
+              p={5}
+              borderRadius={15}
+              boxShadow={'5px 5px 5px black'}
+              >
+                <Heading as='h2' fontSize={'1.2em'}>Datos a Consultar</Heading>
               <Field name="tipoReserva">
                 {({ field, form }) => (
                   <FormControl
                     isInvalid={
                       form.errors.tipoReserva && form.touched.tipoReserva
                     }
+                    isRequired
                   >
-                    <FormLabel htmlFor="tipoReserva">Tipo de Reserva <Text display={'inline-block'}color={'red'}>*</Text></FormLabel>
+                    <FormLabel htmlFor="tipoReserva">Tipo de Reserva </FormLabel>
                     <RadioGroup
                       {...field}
                       id="tipoReserva"
@@ -285,8 +317,8 @@ export const FormConsulta = () => {
               {props.values.tipoReserva === "empresa" && (
                 <Field name="razonSocial">
                   {({ field, form }) => (
-                    <FormControl>
-                      <FormLabel htmlFor="razonSocial">Razón Social <Text display={'inline-block'}color={'red'}>*</Text></FormLabel>
+                    <FormControl isRequired>
+                      <FormLabel htmlFor="razonSocial">Razón Social </FormLabel>
                       <Input
                         {...field}
                         id="razonSocial"
@@ -301,8 +333,9 @@ export const FormConsulta = () => {
                 {({ field, form }) => (
                   <FormControl
                     isInvalid={form.errors.fechaIng && form.touched.fechaIng}
+                    isRequired
                   >
-                    <FormLabel htmlFor="fechaIng">Fecha de Ingreso <Text display={'inline-block'}color={'red'}>*</Text></FormLabel>
+                    <FormLabel htmlFor="fechaIng">Fecha de Ingreso</FormLabel>
                     <Input
                       {...field}
                       id="fechaIng"
@@ -327,8 +360,9 @@ export const FormConsulta = () => {
                     isInvalid={
                       form.errors.fechaSalida && form.touched.fechaSalida
                     }
+                    isRequired
                   >
-                    <FormLabel htmlFor="fechaSalida">Fecha de Salida <Text display={'inline-block'}color={'red'}>*</Text></FormLabel>
+                    <FormLabel htmlFor="fechaSalida">Fecha de Salida</FormLabel>
                     <Input
                       {...field}
                       id="fechaSalida"
@@ -352,6 +386,7 @@ export const FormConsulta = () => {
                 {({ field, form }) => (
                   <FormControl
                     isInvalid={form.errors.nroNoche && form.touched.nroNoche}
+                    
                   >
                     <FormLabel htmlFor="nroNoche">Número de Noches</FormLabel>
                     <NumberInput min={1} value={field.value || ''}>
@@ -361,6 +396,15 @@ export const FormConsulta = () => {
                   </FormControl>
                 )}
               </Field>
+              </Box>
+              <Box 
+              border={'2px solid'}
+              borderColor={'secondary.600'}
+              p={5}
+              borderRadius={15}
+              boxShadow={'5px 5px 5px black'}
+              >
+                <Heading as='h2' fontSize={'1.2em'}>Sobre Habitaciones y Servicios</Heading>
               <Field name="habitaciones">
                 {({ form }) => (
                   <FormControl>
@@ -395,7 +439,7 @@ export const FormConsulta = () => {
                   </FormControl>
                 )}
               </Field>
-              jsxCopy
+            
               <Field name="servicioAdicional">
                 {({ field, form }) => (
                   <FormControl>
@@ -446,16 +490,35 @@ export const FormConsulta = () => {
                   </FormControl>
                 )}
               </Field>
+              </Box>
               <Button
                 m={4}
                 variant={"filled"}
                 isLoading={props.isSubmitting}
                 type="submit"
+                w='200px'
+                
+                
               >
-                Pedir Presupuesto
+                ENVIAR CONSULTA
               </Button>
             </VStack>
-            <Modal isOpen={isOpen} onClose={onClose}>
+            <ExitoModal 
+            isOpen={isOpen} 
+            onClose={onClose}
+
+            msjOk={"Tu solicitud de presupuesto ha sido enviada con éxito."}
+            msjError={"Hubo un error al enviar tu solicitud. Por favor, intenta de nuevo."}
+            onClick={(e) => {
+                            onClose();
+                            if (submissionStatus === "success") {
+                            props.resetForm();
+                            }
+                       }}
+            submissionStatus={submissionStatus}           
+            />
+
+            {/* <Modal isOpen={isOpen} onClose={onClose}>
               <ModalOverlay />
               <ModalContent>
                 <ModalHeader>
@@ -477,7 +540,7 @@ export const FormConsulta = () => {
                   </Button>
                 </ModalFooter>
               </ModalContent>
-            </Modal>
+            </Modal> */}
           </Form>
         )}
       </Formik>

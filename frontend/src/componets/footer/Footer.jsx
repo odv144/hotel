@@ -18,12 +18,14 @@ import { MdEmail } from "react-icons/md";
 import { Link } from "react-router-dom";
 
 export const Footer = () => {
+
+  console.log(import.meta.env.VITE_API_URL);
   
   const imgUrl = useBreakpointValue({base:"/img/logo2linea.svg", md: "/img/logo1linea.svg"})
 
   return (
     <>
-      <Center w="100vw" bg="primary.500" pt={"15px"}>
+      <Center w="100%" bg="primary.500" pt={"15px"}>
         <Img src={imgUrl} width={"250px"} />
       </Center>
       <Box
@@ -33,15 +35,21 @@ export const Footer = () => {
         px={4}
         flexDir={["column", "row"]}
       >
-        <Center flexDir={["column", "row"]} justifyContent={"space-around"}>
-          <Link to={"/nosotros"}>Sobre nosotros</Link>
-          <Link to={"/room"}>Habitaciones</Link>
-          <Link>Nuestros servicios</Link>
+        <Center 
+        flexDir={["column", "row"]} 
+        justifyContent={"space-around"}
+       
+        >
+          <Link to={"/nosotros"}
+        
+          >Sobre nosotros</Link>
+          {/* <Link to={"/room"}>Habitaciones</Link> */}
+          {/* <Link>Nuestros servicios</Link> */}
           <Link to={"/interes"}>Sitios de Interes</Link>
-          <Link to={"/consulta"}>Formulario de reservas</Link>
+          <Link to={"/consulta"}>Formulario de Consulta</Link>
         </Center>
         <Divider />
-        <Center flexDir={["column", "row"]} justifyContent={"space-around"}>
+        <Center flexDir={["column", "row"]}justifyContent={"space-around"}>
           <Text p={5}>
             <Icon as={BsGeoAlt} mr={2} /> Mendoza, Argentina
           </Text>

@@ -29,28 +29,41 @@ export const RoomModal = ({ name, img, service, isOpen, onClose }) => {
      
       <Modal isOpen={isOpen} onClose={onClose} size={modalSize}>
         <ModalOverlay  />
-        <ModalContent>
+        <ModalContent  >
           <ModalHeader bg="brand.light" color="white" minH={"50px"}>
             <Image src="/img/logo2linea.svg" />
           </ModalHeader>
           <ModalCloseButton color='secondary.500'/>
-          <ModalBody p={0} color={"black"} bg={"white"}>
-            <VStack align="stretch" spacing={4}>
-              <Text fontSize="2xl" fontWeight="bold" p={4} display={"inline-block"} marginTop={3} >
+          <ModalBody  color={"black"} bg={"white"}>
+            <VStack 
+            align="left" 
+            // spacing={4}
+            px={'10%'}
+            
+            >
+              <Text fontSize="2.8em" 
+              fontWeight="bold" 
+              display={"inline-block"}
+               marginTop={5} >
                 {name}
               </Text>
-              <Image
+              {/* <Flex justifyContent={'center'}> */}
+
+              <Image 
                 objectFit="cover"
                 width="100%"
                 height="100%"
+                borderRadius={'16px'}
                 src={img}
-                alt={name}
-              />
-              <Box p={4}>
-                <Text fontSize="xl" fontWeight="bold" mb={2}>
+                alt={name}  
+                
+                />
+              {/* </Flex> */}
+              <Box>
+                <Text fontSize="2em" fontWeight="bold" mb={2}>
                   Características
                 </Text>
-                <VStack align="stretch" spacing={2}>
+                <VStack align="stretch" spacing={2} fontSize={'1.5em'}>
                   <HStack>
                     <Icon as={FaUser} />
                     <Text>Capacidad: 3 personas</Text>
@@ -79,7 +92,9 @@ export const RoomModal = ({ name, img, service, isOpen, onClose }) => {
                 <Text
                   m={2}
                   color={"brand.light"}
-                  fontWeight={900}
+                  fontWeight={400}
+                  fontSize={'2.5em'}
+                  textAlign={'center'}
                   _hover={{ cursor: "pointer" }}
                   onClick={() => setShow(!show)}
                 >
@@ -88,7 +103,7 @@ export const RoomModal = ({ name, img, service, isOpen, onClose }) => {
                 </Text>
                 {show && (
                   <Box padding={4}>
-                    <VStack align="stretch" spacing={2}>
+                    <VStack align="stretch" spacing={2} fontSize={'1.5em'}>
                       {service.map((servi, index) => (
                         <HStack key={index}>
                           <Text>{servi}</Text>
@@ -97,9 +112,9 @@ export const RoomModal = ({ name, img, service, isOpen, onClose }) => {
                     </VStack>
                   </Box>
                 )}
-                <Flex w={"100%"} justifyContent={"flex-end"}>
+                <Flex w={"100%"} justifyContent={"center"}>
                   <Button m={2}>
-                    <Link to={`/consulta`}>Reserva</Link>
+                    <Link to={`/consulta`}>Consulta</Link>
                   </Button>
                 </Flex>
               </Flex>

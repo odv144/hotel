@@ -22,13 +22,16 @@ import { AdminLayout } from "./componets/admin/Layout/AdminLayout.jsx";
 import { HabitacionProvider } from "./context/HabitacionProvider.jsx";
 import { MenuReservas } from "./componets/admin/MenuReservas.jsx";
 import { NuevaHabitacion } from "./componets/admin/NuevaHabitacion.jsx";
+import { ReservacionesContext } from "./componets/admin/ReservacionesContext.jsx";
+import { ReservasProvider } from "./context/ReservasProvider.jsx";
+import Error from "./componets/header/Error.jsx";
 
 
 const router = createBrowserRouter([
   {
     path: "/",
     element: <App />,
-    errorElement: <h1>Error</h1>,
+    errorElement: <Error/>,
   },
   {
     path: "/consulta",
@@ -72,41 +75,38 @@ const router = createBrowserRouter([
         path: "nueva",
         element: <NuevaHabitacion />,
       },
+      // {
+      //   path: "reservaciones",
+      //   element: <Reservaciones />,
+      // },
       {
-        path: "reservaciones",
-        element: <Reservaciones />,
+        path: "reservacontext",
+        element: <ReservacionesContext />,
       },
     ],
   },
   {
-    path:'reservaciones',
-   element:<Reservaciones/>,
-   },
-   
+    path: 'reservaciones',
+    element: <Reservaciones />,
+  },
+
   {
-    path:'/admin/home',
-    element:<Bienvenida/>,
+    path: '/admin/home',
+    element: <Bienvenida />,
   },
 ])
 
 ReactDOM.createRoot(document.getElementById("root")).render(
   <ChakraProvider theme={themeCustom}>
-    <Global
-      styles={css`
-      @font-face{
-      font-family:'MiFuente';
-      src:url('/fonts/poppins/Poppins-Regular.ttf);
-      font-weight:normal;
-      font-style:normal;
-      
-      }
-      `}
-    />
+    
     <React.StrictMode>
       <UsuarioProvider>
-        <HabitacionProvider>
-          <RouterProvider router={router} />
-        </HabitacionProvider>
+        <ReservasProvider>
+
+          <HabitacionProvider>
+            <RouterProvider router={router} />
+          </HabitacionProvider>
+        </ReservasProvider>
       </UsuarioProvider>
     </React.StrictMode>
   </ChakraProvider>

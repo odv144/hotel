@@ -4,6 +4,7 @@ import { RoomReservaConfirmModal } from './RoomReservaConfirmModal';
 import {RoomCardCancelModal} from './RoomCardCancelModal';
 import axios from 'axios';
 import { HabitacionContext } from '../../context/HabitacionContext';
+import { ReservasContext } from '../../context/ReservasContext';
 
 const statusStyles = {
   cancelado: {
@@ -32,7 +33,8 @@ const statusStyles = {
 export const StatusText = ({dataModal,cliente,status ,children, mostrarIconos = true }) => {
   const styles = statusStyles[status] || {};
   const BASE_URL = "https://hotel-oceano.onrender.com";
-  const {setUpdateRoom} = useContext(HabitacionContext);
+  //const {setUpdateRoom} = useContext(HabitacionContext);
+  const {setUpdateRoom} = useContext(ReservasContext);
 
   const [isConfirmModalOpen, setIsConfirmModalOpen] = useState(false);
   const [isCancelModalOpen, setIsCancelModalOpen] = useState(false);

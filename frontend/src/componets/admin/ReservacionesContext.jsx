@@ -1,6 +1,12 @@
 // src/components/admin/Reservaciones.jsx
 import React, { useContext, useEffect, useState } from "react";
-import { Box, Flex, Heading, Image, useBreakpointValue } from "@chakra-ui/react";
+import {
+  Box,
+  Flex,
+  Heading,
+  Image,
+  useBreakpointValue,
+} from "@chakra-ui/react";
 import { ArrowBackIcon } from "@chakra-ui/icons";
 
 import { FooterAdmin } from "../footer/FooterAdmin";
@@ -11,17 +17,26 @@ import { HabitacionContext } from "../../context/HabitacionContext";
 import Header from "./Header";
 import { Link } from "react-router-dom";
 import { Footer } from "../footer/Footer";
+import { ReservasContext } from "../../context/ReservasContext";
 
-export const Reservaciones = () => {
-  const { reservas, consultas } = useContext(HabitacionContext);
+export const ReservacionesContext = () => {
+  const { reservas, obtenerReservas, updateRoom } = useContext(ReservasContext);
+  const { consultas } = useContext(HabitacionContext);
+  
   const [filtro, setFiltro] = useState("all");
-  const isMobile= useBreakpointValue({base:true,sm:false,md:false,xl:false})
+  const isMobile = useBreakpointValue({
+    base: true,
+    sm: false,
+    md: false,
+    xl: false,
+  });
 
+  useEffect(() => {
+    obtenerReservas();
+  }, [updateRoom]);
   return (
     <>
-      <Header imgUrl={"/img/logo2linea.svg"} />
-
-      <Box
+          <Box
         display="flex"
         flexDirection="column"
         alignItems="center"
@@ -73,17 +88,23 @@ export const Reservaciones = () => {
 
         {filtro == "all"
           ? consultas
-          .filter((consulta)=>consulta.status==='A')  
-          .map((consulta) => (
-              <RoomCardConsulta key={consulta.id} consulta={consulta} />
-            ))
+              .filter((consulta) => consulta.status === "A")
+              .map((consulta) => (
+                <RoomCardConsulta key={consulta.id} consulta={consulta} />
+              ))
           : reservas
               .filter((reserva) => reserva.status === filtro)
               .map((reserva) => (
                 <RoomCardReserva key={reserva.id} {...reserva} />
               ))}
-        {isMobile ? <FooterAdmin /> : <Box w='100vw'> <Footer /></Box>}
-
+        {isMobile ? (
+          <FooterAdmin />
+        ) : (
+          <Box w="100vw">
+            {" "}
+            <Footer />
+          </Box>
+        )}
       </Box>
     </>
   );

@@ -18,13 +18,12 @@ export const InputCustom = {
       field: {
         bg: "white",
         border: "1px solid",
-        borderColor: "varios.200",
+        borderColor: "primary.600",
         fontSize: "14px",
         width: "365px",
         height: "40px",
         padding: "10px 16px",
         borderRadius: "5px ",
-        border: "1px solid ",
         _placeholder: {
             color: "varios.500",
             fontStyle: 'italic',

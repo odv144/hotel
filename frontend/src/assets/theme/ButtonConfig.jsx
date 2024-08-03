@@ -5,12 +5,23 @@ export const ButtonConfig = defineStyleConfig({
   
   variants: {
     filled: {
-      fontWeight: 'bold',
-      borderRadius: '25px',
+      fontWeight: 400,
+      fontsize:'0.9em',
+      lineHeight: '142%',
+      letterSpacing:'0.25px',
+      h:'2.5em',
+      width:'12em',
+      px:'10px',
+      fontFamily: "Poppins",
+      borderRadius: '100px',
+      alignItems:'center',
       transition: 'all 0.2s',
-      bg: 'primary.default',
+      bg: 'secondary.500',
       color: 'black',
+
       _hover: {
+        bg: 'secondary.400',
+       boxShadow:"0px 1px 2px 0px rgba(0, 0, 0, 0.30), 0px 1px 3px 1px rgba(0, 0, 0, 0.15)",
         opacity: 0.8,
       },
       _active: {

@@ -2,12 +2,9 @@ import {
   Box,
   Image,
   Text,
-  Grid,
-  GridItem,
   Input,
   Button,
   Flex,
-  Center,
   useDisclosure,
   Modal,
   ModalOverlay,
@@ -17,13 +14,14 @@ import {
   ModalBody,
   ModalFooter,
 } from "@chakra-ui/react";
-import { StatusText } from "./StatusText.jsx";
 
 import { formatDate } from "../../assets/formatDate.js";
 import { useContext, useEffect, useState } from "react";
 import { RoomCardConfirmModal } from "./RoomCardConfirmModal.jsx";
 import { HabitacionContext } from "../../context/HabitacionContext.jsx";
 import axios from "axios";
+import ExitoModal from "./ExitoModal.jsx";
+// import { ReservasContext } from "../../context/ReservasContext.jsx";
 
 export const RoomCardConsulta = ({
   // id,
@@ -41,7 +39,12 @@ export const RoomCardConsulta = ({
   const [roomTipo, setRoomTypes] = useState({});
   const { isOpen, onOpen, onClose } = useDisclosure();
   const [isDeleting, setIsDeleting] = useState(false);
-  const { setUpdateRoom, updateRoom} = useContext(HabitacionContext);
+  const { setUpdateRoom, updateRoom} = useContext(HabitacionContext); //tomado de Habitaciones
+  // const { setUpdateRoom, updateRoom} = useContext(ReservasContext);
+  const [isExitoOpen, setIsExitoOpen] = useState(false);
+  const [msjOk,setMsjOk]= useState('' )
+  const [msjError,setMsjError]= useState('' )
+  const [submissionStatus ,setSubmissionStatus]= useState('' )
 
   const getRoomType= async(id)=>{
     try{
@@ -79,19 +82,39 @@ export const RoomCardConsulta = ({
   const closeConfirmModal = () => {
     setIsConfirmModalOpen(false);
   };
+  const [data,setData]=useState({})
   const cliente = consulta.client.is_company? consulta.client.company.name : consulta.client.individual.first_name;
   
   
   const onDelete = async (id) => {
     try {
-     
-      await axios.delete(
-        `${BASE_URL}/api-quotation/quotation/${id}/`
-      );
-      
-      setUpdateRoom(true);
+      const response = await axios.get(`${BASE_URL}/api-quotation/quotation/${id}/`);
+       setData(response.data)
+          
+      if(response.data){
+        
+        // console.log("Data para actu"+JSON.stringify(updateData));
+        await axios.patch(
+          `${BASE_URL}/api-quotation/quotation/${id}/`,{status:"D"},
+          {
+            headers: {
+              "Content-Type": "application/json",
+              Accept: "application/json",
+            },
+          }
+        )
+       
+          
+        }
+        setMsjOk("La reserva fue Confirmada");
+        setIsExitoOpen(true);
+        setSubmissionStatus('success')
+       setUpdateRoom(true);
       // setHabitaciones(habitaciones.filter(hab => hab.id !== id));
     } catch (error) {
+      setMsjOk("Algo salio mal");
+      setIsExitoOpen(true);
+      setSubmissionStatus('error')
       console.error("Error al eliminar la consulta:", error);
     }
   };
@@ -108,7 +131,21 @@ export const RoomCardConsulta = ({
       setIsDeleting(false);
     }
   };
+  const cerrarModales=()=>{
+    setIsExitoOpen(false);
+   
+  }
+
   return (
+    <>
+     <ExitoModal 
+    isOpen={isExitoOpen}
+    onClose={cerrarModales}
+    onClick={cerrarModales}
+    submissionStatus={submissionStatus}
+    msjOk = {msjOk}
+    msjError ={msjError}
+    />
     <Box
       flexDirection="column"
       alignItems="center"
@@ -259,5 +296,6 @@ export const RoomCardConsulta = ({
           </Modal>
     </Box>
     
+    </>
   );
 };

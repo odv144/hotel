@@ -19,6 +19,7 @@ import { Link, useParams } from "react-router-dom";
 import axios from "axios";
 import Header from "./Header";
 import { ArrowBackIcon } from "@chakra-ui/icons";
+import ExitoModal from "./ExitoModal";
 
 export const NuevaHabitacion = () => {
   const imgUrl = useBreakpointValue({
@@ -27,7 +28,15 @@ export const NuevaHabitacion = () => {
   });
   const { id } = useParams();
   const [csrfToken, setCsrfToken] = useState("");
+  const [isExitoOpen, setIsExitoOpen] = useState(false);
+  const [msjOk,setMsjOk]= useState('' )
+  const [msjError,setMsjError]= useState('' )
+  const [submissionStatus ,setSubmissionStatus]= useState('' )
 
+  const cerrarModales=()=>{
+    setIsExitoOpen(false);
+   
+  }
   const [formData, setFormData] = useState({
     type: "Queen",
     description: "",
@@ -64,20 +73,21 @@ export const NuevaHabitacion = () => {
         // price: Number(formData.price),
       };
       delete datosAEnviar.id;
-
-      // console.log(
-      //   "Estructura por enviar:",
-      //   JSON.stringify(datosAEnviar, null, 2)
-      // );
-
       const response = await axios.post(`https://hotel-oceano.onrender.com/api-room/roomtype/`,
         datosAEnviar,
        
       );
-
+           
+       
+      setMsjOk("La Habitación se creo correctamente");
+      setIsExitoOpen(true);
+      setSubmissionStatus('success')
       console.log("Data updated successfully:", response.data);
       // You might want to show a success message to the user here
     } catch (error) {
+      setMsjOk("La Habitación no pudo crearse");
+      setIsExitoOpen(true);
+      setSubmissionStatus('error')
       console.error("Error updating data:", error);
       // You might want to show an error message to the user here
     }
@@ -85,8 +95,15 @@ export const NuevaHabitacion = () => {
 
   return (
     <>
+      <ExitoModal
+       isOpen={isExitoOpen}
+       onClose={cerrarModales}
+       onClick={cerrarModales}
+       submissionStatus={submissionStatus}
+       msjOk = {msjOk}
+       msjError ={msjError}
+      />
       <Header imgUrl={imgUrl} />
-
       <Box
         p={4}
         maxW="sm"

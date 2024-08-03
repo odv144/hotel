@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import {
   Box,
   Button,
@@ -15,10 +15,13 @@ import {
   ModalBody,
   ModalCloseButton,
   Select,
+  ModalFooter,
 } from "@chakra-ui/react";
 import { StatusText } from "./StatusText";
 import axios from "axios";
 import { formatDate } from "../../assets/formatDate";
+import { ReservasContext } from "../../context/ReservasContext";
+import ExitoModal from "./ExitoModal";
 
 export const RoomReservaConfirmModal = ({
   id,
@@ -32,11 +35,28 @@ export const RoomReservaConfirmModal = ({
   codRes,
 }) => {
   const URL_BASE = "https://hotel-oceano.onrender.com";
+  const { setUpdateRoom } = useContext(ReservasContext);
+  const fecha = formatDate(Date.now());
+
+  const [isExitoOpen, setIsExitoOpen] = useState(false);
+  const [msjOk,setMsjOk]= useState('' )
+  const [msjError,setMsjError]= useState('' )
+  const [submissionStatus ,setSubmissionStatus]= useState('' )
+  // const [confirmationMessage, setConfirmationMessage] = useState("");
+
   const [rooms, setRooms] = useState([]);
   const [room, setRoom] = useState([]);
   const [selectedRoomId, setSelectedRoomId] = useState(""); // Nuevo estado para el ID de la habitación seleccionada
-  const fecha = formatDate(Date.now());
+  
+  
   //consultar las cotizaciones de es
+  //con esta funcion manejo el cierre de ambos modales en cascada
+  const cerrarModales=()=>{
+    setIsExitoOpen(false);
+   
+  }
+  
+  
   useEffect(() => {
     // Cargar las habitaciones cuando el modal se abra
     if (isOpen) {
@@ -65,8 +85,7 @@ export const RoomReservaConfirmModal = ({
     try {
       const response = await axios.get(`${URL_BASE}/api-room/roomtype/${id}`);
       setRoom(response.data);
-      // console.log("data de roomtype")
-      // console.log(response.data)
+    
     } catch (error) {
       console.log("Se genero error al obtener las room type");
     }
@@ -82,10 +101,10 @@ export const RoomReservaConfirmModal = ({
       client_id: client_id,
       quotation_id: codRes,
     };
-    
+
     try {
       console.log(JSON.stringify(formData));
-     
+
       const response = await axios.put(
         `${URL_BASE}/api-reservation/reservationroom/${id}/`,
         JSON.stringify(formData),
@@ -93,157 +112,191 @@ export const RoomReservaConfirmModal = ({
           headers: {
             "Content-Type": "application/json",
             Accept: "application/json",
-        },
+          },
         }
       );
-      alert("La reserva fue Confirmada");
-      onClose();
+      await axios.patch(
+        `${BASE_URL}/api-quotation/quotation/${id}/`,{status:"D"},
+        {
+          headers: {
+            "Content-Type": "application/json",
+            Accept: "application/json",
+          },
+        }
+      )
+     
       
+      setUpdateRoom(true);
+    
+      setMsjOk("La reserva fue Confirmada");
+      setIsExitoOpen(true);
+      setSubmissionStatus('success')
+      console.log("Reserva confirmada correctamente");
+     
+     
     } catch (error) {
+    
+      setSubmissionStatus('error')
+      setMsjError("Posible error con el nro de habitacion");
+      setIsExitoOpen(true);
       console.log("algo salio mal al confirmar");
     }
   };
 
   return (
-    <Modal isOpen={isOpen} onClose={onClose}>
-      <ModalOverlay />
-      <ModalContent bg="#FFFFFF">
-        <ModalHeader>
+    <>
+     <ExitoModal 
+    isOpen={isExitoOpen}
+    onClose={cerrarModales}
+    onClick={cerrarModales}
+    submissionStatus={submissionStatus}
+    msjOk = {msjOk}
+    msjError ={msjError}
+    />
+      
+      <Modal isOpen={isOpen} onClose={onClose}>
+        <ModalOverlay />
+        <ModalContent bg="#FFFFFF">
+          <ModalHeader>
+            <Box
+              display="flex"
+              flexDirection="column"
+              alignItems="center"
+              mb="10px"
+            >
+              <Image
+                src="/icons/check2.png"
+                alt="icon"
+                width="66px"
+                height="66px"
+              />
+            </Box>
+          </ModalHeader>
           <Box
+            width="100%"
             display="flex"
             flexDirection="column"
             alignItems="center"
-            mb="10px"
+            mb="20px"
+            position="relative"
           >
             <Image
-              src="/icons/check2.png"
-              alt="icon"
-              width="66px"
-              height="66px"
+              src="/img/habconfirmar.png"
+              alt="banner"
+              width="100%"
+              height="85px"
             />
+            <Heading
+              position="absolute"
+              top="50%"
+              left="50%"
+              transform="translate(-50%, -50%)"
+              width="100%"
+              height="40px"
+              background="rgba(255, 234, 194, 0.35)"
+              boxShadow="0px 4px 4px rgba(0, 0, 0, 0.25)"
+              backdropFilter="blur(2px)"
+              textAlign="center"
+              display="flex"
+              alignItems="center"
+              justifyContent="center"
+              padding="0px"
+              zIndex="5"
+              textColor="#0B265B"
+              size="32px"
+            >
+              Confirmación
+            </Heading>
           </Box>
-        </ModalHeader>
-        <Box
-          width="100%"
-          display="flex"
-          flexDirection="column"
-          alignItems="center"
-          mb="20px"
-          position="relative"
-        >
-          <Image
-            src="/img/habconfirmar.png"
-            alt="banner"
-            width="100%"
-            height="85px"
-          />
-          <Heading
-            position="absolute"
-            top="50%"
-            left="50%"
-            transform="translate(-50%, -50%)"
-            width="100%"
-            height="40px"
-            background="rgba(255, 234, 194, 0.35)"
-            boxShadow="0px 4px 4px rgba(0, 0, 0, 0.25)"
-            backdropFilter="blur(2px)"
-            textAlign="center"
-            display="flex"
-            alignItems="center"
-            justifyContent="center"
-            padding="0px"
-            zIndex="5"
-            textColor="#0B265B"
-            size="32px"
-          >
-            Confirmación
-          </Heading>
-        </Box>
-        <ModalCloseButton />
-        <ModalBody>
-          <Box
-            flexDirection="column"
-            alignItems="center"
-            padding="5px"
-            width="100%"
-            height="auto"
-            background="#FFFFFF"
-            boxShadow="0px 6px 58px rgba(196, 203, 214, 0.103611)"
-            borderRadius="24px"
-            marginBottom="5px"
-          >
-            <Box display="flex" alignItems="center" p="4">
-              <Box>
-                <Box display="flex" justifyContent="flex-start">
-                  <Box mr="40px">
-                    <Text fontSize="12px" fontWeight="bold" color="text.gris">
-                      Tipo de habitación
-                    </Text>
-                    <Text fontSize="14px" color="text.verydark">
-                      {room.type}
-                    </Text>
-                  </Box>
-                  <Box mr="40px">
-                    <Text fontSize="12px" fontWeight="bold" color="text.gris">
-                      Cliente
-                    </Text>
-                    <Text fontSize="14px" color="text.verydark">
-                      {client}
-                    </Text>
-                  </Box>
-                  <Box mr="40px">
-                    <Text fontSize="12px" fontWeight="bold" color="text.gris">
-                      Nro Cotizació
-                    </Text>
-                    <Text fontSize="14px" color="text.verydark">
-                      {codRes}
-                    </Text>
+          <ModalCloseButton />
+          <ModalBody>
+            <Box
+              flexDirection="column"
+              alignItems="center"
+              padding="5px"
+              width="100%"
+              height="auto"
+              background="#FFFFFF"
+              boxShadow="0px 6px 58px rgba(196, 203, 214, 0.103611)"
+              borderRadius="24px"
+              marginBottom="5px"
+            >
+              <Box display="flex" alignItems="center" p="4">
+                <Box>
+                  <Box display="flex" justifyContent="flex-start">
+                    <Box mr="40px">
+                      <Text fontSize="12px" fontWeight="bold" color="text.gris">
+                        Tipo de habitación
+                      </Text>
+                      <Text fontSize="14px" color="text.verydark">
+                        {room.type}
+                      </Text>
+                    </Box>
+                    <Box mr="40px">
+                      <Text fontSize="12px" fontWeight="bold" color="text.gris">
+                        Cliente
+                      </Text>
+                      <Text fontSize="14px" color="text.verydark">
+                        {client}
+                      </Text>
+                    </Box>
+                    <Box mr="40px">
+                      <Text fontSize="12px" fontWeight="bold" color="text.gris">
+                        Nro Cotizació
+                      </Text>
+                      <Text fontSize="14px" color="text.verydark">
+                        {codRes}
+                      </Text>
+                    </Box>
                   </Box>
                 </Box>
               </Box>
-            </Box>
 
-            <Box display="flex" alignItems="center" justifyContent="center">
-              <Image
-                src="/icons/inactive.png"
-                alt="calendar inactive"
-                width="24px"
-                height="24px"
-                marginRight="8px"
-              />
-              <Text fontSize="14px" color="#91929E">
-                In: {date_in} Out: {date_out}
-              </Text>
-            </Box>
+              <Box display="flex" alignItems="center" justifyContent="center">
+                <Image
+                  src="/icons/inactive.png"
+                  alt="calendar inactive"
+                  width="24px"
+                  height="24px"
+                  marginRight="8px"
+                />
+                <Text fontSize="14px" color="#91929E">
+                  In: {date_in} Out: {date_out}
+                </Text>
+              </Box>
 
-            <Grid templateColumns="repeat(3, 1fr)" gap="10px" marginTop="16px">
-              <GridItem>
-                <Text fontSize="12px" fontWeight="bold" color="text.gris">
-                  N° Habitación
-                </Text>
-                <Select
-                  value={selectedRoomId}
-                  onChange={(e) => handlRoom(e)}
-                  fontSize="14px"
-                  color="text.verydark"
-                >
-                  <option value="">Seleccione una habitación</option>
-                  {rooms.map((room) => (
-                    <option key={room.id} value={room.id}>
-                      {room.number}
-                    </option>
-                  ))}
-                </Select>
-              </GridItem>
-              <GridItem>
-                <Text fontSize="12px" fontWeight="bold" color="text.gris">
-                  Confirmado
-                </Text>
-                <Text fontSize="14px" color="text.verydark">
-                  {fecha}
-                </Text>
-              </GridItem>
-              {/* <GridItem>
+              <Grid
+                templateColumns="repeat(3, 1fr)"
+                gap="10px"
+                marginTop="16px"
+              >
+                <GridItem>
+                  <Text fontSize="12px" fontWeight="bold" color="text.gris">
+                    N° Habitación
+                  </Text>
+                  <Select
+                    value={selectedRoomId}
+                    onChange={(e) => handlRoom(e)}
+                    fontSize="14px"
+                    color="text.verydark"
+                  >
+                    <option value="">Seleccione una habitación</option>
+                    {rooms.map((room) => (
+                      <option key={room.id} value={room.id}>
+                        {room.number}
+                      </option>
+                    ))}
+                  </Select>
+                </GridItem>
+                <GridItem>
+                  <Text fontSize="12px" fontWeight="bold" color="text.gris">
+                    Confirmado
+                  </Text>
+                  <Text fontSize="14px" color="text.verydark">
+                    {fecha}
+                  </Text>
+                </GridItem>
+                {/* <GridItem>
                 <Text fontSize="12px" fontWeight="bold" color="text.gris" align="center">
                   Status
                 </Text>
@@ -253,46 +306,47 @@ export const RoomReservaConfirmModal = ({
                   </StatusText>
                 )}
               </GridItem> */}
-            </Grid>
+              </Grid>
 
-            <Box>
-              <Text fontSize="14px" fontWeight="bold" color="#20102B">
-                Observaciones
-              </Text>
-              <Input
-                placeholder="Escribe tus observaciones aquí"
-                marginTop="8px"
-                style={{
-                  display: "flex",
-                  flexDirection: "row",
-                  alignItems: "center",
-                  padding: "0px",
-                  gap: "12px",
-                  width: "100%",
-                  height: "44px",
-                  boxShadow: "0px 1px 2px 0px #4D40551A",
-                  borderRadius: "4px",
-                  flex: "none",
-                  order: "0",
-                  flexGrow: "1",
-                  border: "1px solid #4D40551A",
-                }}
-              />
+              <Box>
+                <Text fontSize="14px" fontWeight="bold" color="#20102B">
+                  Observaciones
+                </Text>
+                <Input
+                  placeholder="Escribe tus observaciones aquí"
+                  marginTop="8px"
+                  style={{
+                    display: "flex",
+                    flexDirection: "row",
+                    alignItems: "center",
+                    padding: "0px",
+                    gap: "12px",
+                    width: "100%",
+                    height: "44px",
+                    boxShadow: "0px 1px 2px 0px #4D40551A",
+                    borderRadius: "4px",
+                    flex: "none",
+                    order: "0",
+                    flexGrow: "1",
+                    border: "1px solid #4D40551A",
+                  }}
+                />
+              </Box>
             </Box>
-          </Box>
-          <Button
-            mt="24px"
-            onClick={() => {
-              handleConfirm(selectedRoomId);
-            }}
-            colorScheme="blue"
-            width="100%"
-            backgroundColor="#FFDE9D"
-          >
-            Confirmar
-          </Button>
-        </ModalBody>
-      </ModalContent>
-    </Modal>
+            <Button
+              mt="24px"
+              onClick={() => {
+                handleConfirm(selectedRoomId);
+              }}
+              colorScheme="blue"
+              width="100%"
+              backgroundColor="#FFDE9D"
+            >
+              Confirmar
+            </Button>
+          </ModalBody>
+        </ModalContent>
+      </Modal>
+    </>
   );
 };

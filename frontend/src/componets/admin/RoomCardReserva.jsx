@@ -1,8 +1,9 @@
 import { Box, Image, Text, Grid, GridItem, Input } from '@chakra-ui/react';
 import { StatusText } from "./StatusText.jsx";
 import { formatDate } from '../../assets/formatDate.js';
-import { useEffect, useState } from 'react';
+import { useContext, useEffect, useState } from 'react';
 import axios from 'axios';
+import { ReservasContext } from '../../context/ReservasContext.jsx';
 
 export const RoomCardReserva = ({
   status,
@@ -21,10 +22,18 @@ export const RoomCardReserva = ({
   const [roomType, setRoomType] = useState('');
   const [client, setClient] = useState(null);
   const [dataModal, setDataModal] = useState({});
+  const {updateRoom, obtenerReservas,setUpdateRoom} = useContext(ReservasContext)
+
+  useEffect(() => {
+    if (updateRoom) {
+      obtenerReservas();
+      setUpdateRoom(false);
+    }
+  }, [updateRoom, obtenerReservas, setUpdateRoom]);
 
   const getClient = async () => {
     try {
-      const responseCli = await axios.get(`${BASE_URL}/api-client/client/${client_id}`);
+      const responseCli = await axios.get(`/api/api-client/client/${client_id}`);
       const cli = responseCli.data;
       setClient(cli);
       
@@ -35,7 +44,7 @@ export const RoomCardReserva = ({
 
   const getTypeRoom = async (roomTypeId) => {
     try {
-      const res = await axios.get(`${BASE_URL}/api-room/roomtype/${roomTypeId}`);
+      const res = await axios.get(`/api/api-room/roomtype/${roomTypeId}`);
       const roomTypeData = res.data;
       setRoomType(roomTypeData.type);
     } catch (error) {
@@ -46,7 +55,7 @@ export const RoomCardReserva = ({
   useEffect(() => {
     const fetchRoomData = async () => {
       try {
-        const response = await axios.get(`${BASE_URL}/api-room/room/${room_id}`);
+        const response = await axios.get(`/api/api-room/room/${room_id}`);
         const roomData = response.data;
         setRoom(roomData);
         setRoomNumber(roomData.number);
@@ -138,7 +147,7 @@ export const RoomCardReserva = ({
         <GridItem>
           <Text fontSize="12px" fontWeight="bold" color="text.gris" align="center">Status</Text>
           {status === "A" && <StatusText status="confirmado" cliente={client} dataModal={dataModal}>Confirmado</StatusText>}
-          {status === "C" && <StatusText status="cancelado" cliente={client} dataModal={dataModal}>Cancelado</StatusText>}
+          {status === "D" && <StatusText status="cancelado" cliente={client} dataModal={dataModal}>Cancelado</StatusText>}
           {status === "R" && <StatusText status="porConfirmar" dataModal={dataModal} cliente={client}>Por Confirmar</StatusText>}
         </GridItem>
       </Grid>

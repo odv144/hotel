@@ -19,14 +19,24 @@ export const themeCustom = extendTheme({
   styles: {
     global: (props) => ({
       fonts: {
-        heading: `'Poppins','MiFuente'`,
+        heading: `'Poppins'`,
       },
 
       "html, body": {
+        m:0,
+        p:0,
         bg: "brand.dark",
         color: "text.default",
-        fontFamily: "Poppins,sans-serif",
+        fontFamily: "Poppins",
       },
+      "h4":{
+        fontSize: "1.3em",
+        lineHeight:'150%',
+        letterSpacing:'0.15px',
+        fontStyle:'normal',
+        fontWeight:500,
+        fontFamily: "Poppins",
+      }
     }),
   },
   components: {
@@ -43,6 +53,7 @@ export const themeCustom = extendTheme({
         500: "#0B265B",
         600: "#091E49",
         800: "#040F24",
+        900:"#020812",
         default: "#E8C888",
         dark: "#DACFF6",
         white: "#FFFFFF",
@@ -50,11 +61,12 @@ export const themeCustom = extendTheme({
       secondary: {
         200: "#FFF1D6",
         500: "#FFDE9D",
+        400: "#FFE5B3",
         600: "#FFC34D",
         default: "#8C65AD",
         dark: "#8C65FF",
       },
-
+    
       fondo_admin: {
         100: '#CEC9C9',
       },
@@ -63,8 +75,13 @@ export const themeCustom = extendTheme({
         200: "#E2E2E2",
         300: "#FFDE9D73",
         400:"#707070",
-        500:"#909090"
+        500:"#909090",
 
+      },
+      neutral:{
+        800:"#34363A",
+        900:"#1A1D22",
+        950:"#010409",
       },
       negative: {
         500: "#F2415A",

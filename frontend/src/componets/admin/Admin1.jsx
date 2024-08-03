@@ -25,10 +25,7 @@ import { ArrowBackIcon } from "@chakra-ui/icons";
 export const Admin1 = () => {
   const { rooms, imgRooms, obtenerDatos } = useContext(HabitacionContext);
   const location = useLocation();
-  const imgUrl = useBreakpointValue({
-    base: "/img/logo2linea.svg",
-    md: "/img/logo1linea.svg",
-  });
+  
   const isMobile = useBreakpointValue({ base: true, sm: false, md: false });
   
   useEffect(()=>{
@@ -37,7 +34,7 @@ export const Admin1 = () => {
   return (
     <>
       {/* Contenido Principal */}
-      <Header imgUrl={imgUrl} />
+     
       <Box bg="primary.500" p={4} mb={4}>
         {/* Título de Habitaciones */}
         <Heading

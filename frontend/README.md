@@ -1,8 +1,69 @@
-# React + Vite
+<h1>Instalación</h1>
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Para instalar el proyecto localmente:
 
-Currently, two official plugins are available:
+<h3>Back-End (FastAPI)</h3>
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+Clona el repositorio del Back-End:
+
+```bash
+  git clone https://github.com/No-Country/s14-21-n-python
+```
+
+Instala poetry:
+
+```bash
+  pip install pipx
+  pipx ensurepath
+  pipx install poetry
+```
+
+Instala las dependencias utilizando poetry:
+
+```bash
+  poetry install
+```
+
+Configura la base de datos PostgreSQL en el archivo de configuración.
+
+Aplica las migraciones:
+
+```bash
+  alembic upgrade head
+```
+
+Inicia el servidor FastAPI:
+
+```bash
+  uvicorn main:app --reload
+```
+
+<h3>Front-End (React)</h3>
+
+Clona el repositorio del frontend:
+
+```BASH
+  git clone https://github.com/No-Country/s14-21-n-python
+```
+
+Instala las dependencias utilizando npm:
+
+```BASH
+  npm install
+```
+
+Configura la URL del backend en los archivos de configuración:
+
+```BASH
+  npm install
+```
+
+Inicia la aplicación React:
+
+```BASH
+  npm run dev
+```
+
+<br>
+
+<!-- USAGE EXAMPLES -->

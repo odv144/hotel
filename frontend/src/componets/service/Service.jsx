@@ -12,6 +12,8 @@ import {
   VStack,
   Center,
   useBreakpointValue,
+  Text,
+  Image,
 } from "@chakra-ui/react";
 import { Feature } from "./Feature";
 import { Link } from "react-router-dom";
@@ -42,16 +44,37 @@ export const Service = () => {
   ];
   return (
     <VStack width="100%" maxWidth={["600px", "800px"]} mx="auto">
-      <SimpleGrid columns={3} width="100%" spacing={[2, 10]}>
-        <Feature icon={<FaLaptop size="24px" />} text="Espacio de Trabajo" />
-        <Feature icon={<FaCoffee size="24px" />} text="Desayuno" />
-        <Feature icon={<FaWifi size="24px" />} text="Free Wifi" />
-        <Feature icon={<FaCar size="24px" />} text="Estacionamiento" />
-        <Feature icon={<FaGlassMartiniAlt size="24px" />} text="Servicio bar" />
+      <Text as='h2'
+      fontSize={'2.8em'}
+      color={'neutral.950'}>Nuestros servicios</Text>
+      <SimpleGrid columns={[1,2,2,3]} width="100%">
         <Feature
-          icon={<FaThermometerHalf size="24px" />}
+          icon={<Image src={'/icons/computer.png'} w='3.4em' h='3.4em'/>} 
+          text="Espacio de Trabajo"
+         
+        />
+        <Feature
+          icon={<Image src={'/icons/bakery_dining.png'} w='3.4em'/>} 
+          text="Desayuno"
+        />
+        <Feature
+          icon={<Image src={'/icons/wifi.png'} w='3.4em'/>} 
+          text="Free Wifi"
+        />
+        <Feature
+          icon={<Image src={'/icons/directions_car.png'} w='3.4em'/>} 
+          text="Estacionamiento"
+        />
+        <Feature
+          icon={<Image src={'/icons/wine_bar.png'} w='3.4em'/>} 
+          text="Servico bar"
+        />
+        <Feature
+          icon={<Image src={'/icons/device_thermostat.png'} w='3.4em'/>} 
           text="Climatización"
         />
+
+      
       </SimpleGrid>
 
       {serviRoom.map((room, index) => (
@@ -65,7 +88,7 @@ export const Service = () => {
 
       <Center width="100%">
         <Button mb={2} variant={"filled"} marginBottom={4}>
-          <Link to={"/consulta"}>RESERVA CON NOSOTROS</Link>
+          <Link to={"/consulta"}>Consultar</Link>
         </Button>
       </Center>
     </VStack>

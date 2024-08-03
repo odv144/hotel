@@ -7,6 +7,7 @@ import {
   Image,
   SimpleGrid,
   Text,
+  useBreakpoint,
   VStack,
   Wrap,
   WrapItem,
@@ -18,18 +19,19 @@ import { Link } from "react-router-dom";
 import Header from "./Header";
 
 export const Bienvenida = () => {
+  const isMobile = useBreakpoint();
   return (
     <Box
       width="100%"
       height="100vh"
-      backgroundImage="url('/img/fondoAdmin.jpeg')"
+      backgroundImage={isMobile==='base'?"url('/img/fondoAdmin.jpeg')":"url('/img/fondoAdminDesktop.jpeg')"}
       backgroundSize="cover"
       backgroundPosition="center"
       display={'flex'}
       flexDirection={'column'}
       position="relative"
     >
-      <Header imgUrl={"/img/logo2linea.svg"} />
+     
 
       <Text
         fontSize="3em"
@@ -65,10 +67,10 @@ export const Bienvenida = () => {
           justifyContent={"space-evenly"}
         >
           {[
-            { icon: FaBed, text: "Habitaciones", url: "habitacion" },
-            { icon: FaCalendarAlt, text: "Reservas", url: "reservaciones" },
-            { icon: FaConciergeBell, text: "Servicios", url: "servicios" },
-            { icon: FaUser, text: "Perfil", url: "perfil" },
+            { icon: FaBed, text: "Habitaciones", url: "habitacion" ,estado:false},
+             { icon: FaCalendarAlt, text: "Reservas", url: "reservacontext",estado:false},
+            { icon: FaConciergeBell, text: "Servicios", url: "servicios" ,estado:true},
+            { icon: FaUser, text: "Perfil", url: "perfil",estado:true},
           ].map((item, index) => (
             <Link to={`/admin/${item.url}`} key={index}>
               <Button
@@ -80,6 +82,7 @@ export const Bienvenida = () => {
                 minW={"150px"}
                 height="100px"
                 fontSize="md"
+                isDisabled={item.estado}
                 borderRadius="xl"
                 _hover={{ bg: "blue.700" }}
               >

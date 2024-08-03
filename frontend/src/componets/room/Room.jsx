@@ -7,6 +7,7 @@ import {
   Stack,
   Text,
   Wrap,
+  useBreakpoint,
   useBreakpointValue,
 } from "@chakra-ui/react";
 import { motion } from "framer-motion";
@@ -25,13 +26,19 @@ export const Room = () => {
       service: [
         "Minibar",
         "Cafetera",
+        "Televisión por cable",
         "Caja de Segurida",
         "Wifi de Alta Velocidad",
+        "Secador de pelo",
+        "Ducha efecto lluvia",
+        "Tina",
+        "Batas de baño",
+        "Kit de amenities"
       ],
     },
     {
       id: 2,
-      title: "Habitación Dreams",
+      title: "Habitación Simple",
       image: "/img/habitacionDream.png",
       buttonText: "Ver más",
       service: [
@@ -80,7 +87,8 @@ export const Room = () => {
   // }, []);
 
   // const { isOpen, onOpen, onClose } = useDisclosure();
-  const isMobile = useBreakpointValue({ base: true, sm: true, md: false });
+  // const isMobile = useBreakpointValue({ base: true, sm: true, md: false });
+  const isMobile = useBreakpoint();
   const nextSlide = useCallback(() => {
     if (!isOpen) {
       setCurrentSlide((prev) => (prev + 1) % slides.length);
@@ -101,23 +109,35 @@ export const Room = () => {
 
   return (
     <Stack
-      width={["395px", "525px", "100%"]}
-      maxWidth={["430px", "100%"]}
-      p={10}
+      // width={["395px", "525px", "100%"]}
+      // maxWidth={["430px", "100%"]}
+      py={[10,'4.5em']}
+      px={['1em',"",'7.5em']}
       color="black"
       bg={"white"}
     >
-      <Box>
-        <Text as="h2" fontSize="2xl" fontWeight="bold" textAlign={"left"}>
+      <Flex flexDirection={['column','rows']}>
+        <Text 
+        as="h2"
+        w={['100%','50%']}
+        pr={'15%'} 
+        fontSize={["1.2em","1.3em","1.5em","2.5em"]} 
+        fontWeight="bold" 
+       
+        textAlign={"left"}>
           Conocé las habitaciones
         </Text>
-        <Text as="h4" textAlign={"left"}>
+        <Text 
+        fontSize={['1em',"1em","1.2em","1.8em"]} 
+        textAlign={"left"} 
+        letterSpacing={'0.15px'}
+        >
           Nuestras habitaciones combinan elegancia y confort con modernas
           comodidades, conocelas.
         </Text>
-      </Box>
-      {isMobile ? (
-        <Box position="relative" h={"450px"} overflow="hidden">
+      </Flex>
+      {isMobile ==='base'  ? (
+        <Box position="relative" h={"450px"}   >
           <motion.div
             key={currentSlide}
             initial={{ opacity: 0 }}
@@ -131,24 +151,29 @@ export const Room = () => {
               objectFit="cover"
               borderRadius={"16px"}
               m="auto"
-              w={["387px", "500px"]}
+              w={"100%"}
+              // w={["387px", "500px"]}
               h={"322px"}
               // h="400px"
             />
           </motion.div>
           <Flex position="absolute" bottom="20px" width="100%" justify="center">
+           
             {slides.map((_, index) => (
               <Button
-                key={index}
-                as="button"
-                bg={currentSlide === index ? "white" : "whiteAlpha.400"}
-                w="30px"
-                h="4px"
-                // borderRadius="50%"
-                mx="2px"
-                onClick={() => setCurrentSlide(index)}
+              key={index}
+              as="button"
+              // bg={currentSlide === index ? "white" : "whiteAlpha.400"}
+              variant={'ouline'}
+              w="30px"
+              h="40px"
+              // borderRadius="16px"
+              
+              onClick={() => setCurrentSlide(index)}
               />
             ))}
+
+          
           </Flex>
           <Box
             position="absolute"
@@ -158,7 +183,7 @@ export const Room = () => {
             textAlign="left"
             size="24px"
           >
-            <Text fontSize="3xl" fontWeight="bold" mb={4}>
+            <Text fontSize="1.3em" >
               {slides[currentSlide].title}
             </Text>
             <Button
@@ -171,7 +196,7 @@ export const Room = () => {
           </Box>
         </Box>
       ) : (
-        <Center>
+        <Center  >
           <Wrap justify={"space-between"}>
             {slides.map((room) => (
               <RoomCard
