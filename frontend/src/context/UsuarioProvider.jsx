@@ -51,9 +51,10 @@ export const UsuarioProvider = ({ children }) => {
           withCredentials: true,
         }
       );
-      console.log(response.data);
-      console.log(document.cookie);
-      console.log(Cookies.get('csrftoken'),{path:apiUrl});
+      console.log("response"+response.data);
+      console.log("cookie"+document.cookie);
+      console.log("get"+Cookies.get('csrftoken'),{path:apiUrl});
+      console.log("path:"+apiUrl);
       const data = {
         "username": userData.usuario,
         "password": userData.password,
