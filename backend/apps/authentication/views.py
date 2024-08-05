@@ -32,7 +32,7 @@ class LoginView(APIView):
             login(request, user)
             csrf_token= get_token(request)
             response = Response({'detail': 'Login successful','csrf_token': csrf_token}, status=status.HTTP_200_OK)
-            response.set_cookie( 'mycookie', 'cookievalue',httponly=False, samesite='None', secure=True, path='http://localhost:5173/')
+            response.set_cookie( 'mycookie', csrf_token,httponly=False, samesite='None', secure=True, path='http://localhost:5173/')
             return response
         return Response({'detail': 'Invalid credentials'}, status=status.HTTP_401_UNAUTHORIZED)
 
