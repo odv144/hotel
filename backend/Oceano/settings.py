@@ -87,9 +87,8 @@ DATABASES = {
         "PASSWORD": os.getenv("DB_PASSWORD"),
         "HOST": os.getenv("DB_HOST"),
         "PORT": "5432",
-    }
+    }    
 }
-
 
 
 # Password validation
@@ -146,17 +145,11 @@ REST_FRAMEWORK = {
         'rest_framework.authentication.SessionAuthentication',
     ]
 }
-#CSRF_TRUSTED_ORIGINS = ['https://hotel-oceano.onrender.com']
 #Solo envía la cookie sobre HTTPS
-CSRF_COOKIE_HTTPONLY = False
 CSRF_COOKIE_SECURE = False
-SESSION_COOKIE_SAMESITE = 'None'
-CSRF_COOKIE_SAMESITE = 'None'
-SESSION_COOKIE_PATH = os.getenv('CORS_ALLOWED_ORIGINS')
-CSRF_COOKIE_PATH =  os.getenv('CORS_ALLOWED_ORIGINS')
-#Previene acceso por JavaScript solo dejo esta en false 
-
-CSRF_TRUSTED_ORIGINS = ['http://localhost:5173','https://hotel-rouge-iota.vercel.app', 'https://hotel-1-o3hc.onrender.com']
+SESSION_COOKIE_HTTPONLY = False
+#Previene acceso por JavaScript
+CSRF_COOKIE_HTTPONLY = False
 #1 semana, en segundos
 SESSION_COOKIE_AGE = 604800
 

@@ -5,12 +5,11 @@ from rest_framework.permissions import IsAuthenticated
 from drf_spectacular.utils import extend_schema
 from .serializers import ServiceSerializer, ReservationRoomSerializer, ReservationServiceSerializer
 from ..models import Service, ReservationRoom, ReservationService
-from .permissions import IsAuthenticatedOrGetOnly
 
 class ServiceViewSet(ModelViewSet):
     serializer_class = ServiceSerializer
     queryset = Service.active_objects.all()
-    permission_classes = [IsAuthenticatedOrGetOnly]
+    permission_classes = [IsAuthenticated]
     
     @extend_schema(
     description=('logical deletion of the Service model'))
