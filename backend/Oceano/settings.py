@@ -14,10 +14,7 @@ SECRET_KEY = os.getenv('SECRET_KEY')
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = os.getenv('DEBUG')
 
-ALLOWED_HOSTS = ['http://localhost:5173',
-    'https://hotel-rouge-iota.vercel.app',
-    'https://hotel-rama-omar3.vercel.app',
-     'https://hotel-1-o3hc.onrender.com']
+ALLOWED_HOSTS = [os.getenv('ALLOWED_HOSTS'),]
 
 # Application definition
 BASE_APPS = [
