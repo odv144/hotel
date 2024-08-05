@@ -5,6 +5,7 @@ from rest_framework import status, serializers
 from rest_framework.permissions import AllowAny, IsAuthenticated
 from drf_spectacular.utils import extend_schema, OpenApiParameter, OpenApiResponse
 from drf_spectacular.types import OpenApiTypes
+from django.middleware.csrf import get_token
 
 class LoginSerializer(serializers.Serializer):
     username = serializers.CharField(required=True)
@@ -27,7 +28,8 @@ class LoginView(APIView):
         user = authenticate(username=username, password=password)
         if user:
             login(request, user)
-            return Response({'detail': 'Login successful'}, status=status.HTTP_200_OK)
+            csrf_token= request.META["CSRF_COOKIE"]
+            return Response({'detail': 'Login successful','csrf_token': csrf_token}, status=status.HTTP_200_OK)
         return Response({'detail': 'Invalid credentials'}, status=status.HTTP_401_UNAUTHORIZED)
 
 @extend_schema(

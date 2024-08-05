@@ -3,13 +3,14 @@ from rest_framework.response import Response
 from rest_framework import status
 from rest_framework.permissions import IsAuthenticated
 from drf_spectacular.utils import extend_schema
+from .permissions import IsAuthenticatedOrGetOnly
 from .serializers import ServiceSerializer, ReservationRoomSerializer, ReservationServiceSerializer
 from ..models import Service, ReservationRoom, ReservationService
 
 class ServiceViewSet(ModelViewSet):
     serializer_class = ServiceSerializer
     queryset = Service.active_objects.all()
-    permission_classes = [IsAuthenticated]
+    # permission_classes = [IsAuthenticated]
     
     @extend_schema(
     description=('logical deletion of the Service model'))
@@ -44,7 +45,8 @@ class ReservationRoomViewSet(ModelViewSet):
 class ReservationServiceViewSet(ModelViewSet):
     serializer_class = ReservationServiceSerializer
     queryset = ReservationService.active_objects.all()
-    permission_classes = [IsAuthenticated]
+    # permission_classes = [IsAuthenticated]
+    permission_classes = [IsAuthenticatedOrGetOnly]
     
     @extend_schema(
     description=('logical deletion of the ReservationService model'))

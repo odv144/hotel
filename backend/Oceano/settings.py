@@ -146,7 +146,7 @@ REST_FRAMEWORK = {
     ]
 }
 #Solo envía la cookie sobre HTTPS
-CSRF_COOKIE_SECURE = False
+CSRF_COOKIE_SECURE = True
 SESSION_COOKIE_HTTPONLY = False
 #Previene acceso por JavaScript
 CSRF_COOKIE_HTTPONLY = False
@@ -167,11 +167,7 @@ SPECTACULAR_SETTINGS = {
 #Configuración de CORS
 CORS_ALLOW_CREDENTIALS = True
 #CORS_ALLOW_ALL_ORIGINS = True 
-CORS_ALLOWED_ORIGINS = [
-    "http://localhost:5173",  # Ajusta según tu puerto local
-    "https://hotel-rama-omar3.vercel.app",
-    "https://hotel-rouge-iota.vercel.app"
-]
+CORS_ALLOWED_ORIGINS = os.getenv('CORS_ALLOWED_ORIGINS', '').split(',')
 
 #Configuración de Cloudinay
 CLOUDINARY_STORAGE = {

@@ -38,7 +38,7 @@ import { HabitacionContext } from "../../context/HabitacionContext";
 import ExitoModal from "../admin/ExitoModal";
 
 export const FormConsulta = () => {
-
+ const apiUrl = import.meta.env.VITE_API_URL;
   const { rooms } = useContext(HabitacionContext);
   const { isOpen, onOpen, onClose } = useDisclosure();
   const [submissionStatus, setSubmissionStatus] = useState(null);
@@ -47,7 +47,7 @@ export const FormConsulta = () => {
   useEffect(()=>{
     const obtenerServicio=async()=>{
      try{
-      const res = await axios.get('https://hotel-oceano.onrender.com/api-reservation/service/')
+      const res = await axios.get(`${apiUrl}/api-reservation/service/`)
      
       setServicios(res.data);
 
@@ -124,7 +124,7 @@ export const FormConsulta = () => {
       // console.log("Datos enviados:", JSON.stringify(formattedData, null, 2));
 
       const response = await axios.post(
-        "https://hotel-oceano.onrender.com/api-quotation/quotation/",
+        `${apiUrl}/api-quotation/quotation/`,
         formattedData,
         {
           headers: {
