@@ -152,8 +152,8 @@ CSRF_COOKIE_HTTPONLY = False
 CSRF_COOKIE_SECURE = False
 SESSION_COOKIE_SAMESITE = 'None'
 CSRF_COOKIE_SAMESITE = 'None'
-SESSION_COOKIE_PATH = '/api'
-CSRF_COOKIE_PATH = '/api'
+SESSION_COOKIE_PATH = os.getenv('CORS_ALLOWED_ORIGINS')
+CSRF_COOKIE_PATH =  os.getenv('CORS_ALLOWED_ORIGINS')
 #Previene acceso por JavaScript solo dejo esta en false 
 
 CSRF_TRUSTED_ORIGINS = ['http://localhost:5173','https://hotel-rouge-iota.vercel.app', 'https://hotel-1-o3hc.onrender.com']
