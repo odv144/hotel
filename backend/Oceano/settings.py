@@ -148,9 +148,15 @@ REST_FRAMEWORK = {
 }
 #CSRF_TRUSTED_ORIGINS = ['https://hotel-oceano.onrender.com']
 #Solo envía la cookie sobre HTTPS
-CSRF_COOKIE_SECURE = False
-#Previene acceso por JavaScript solo dejo esta en false 
 CSRF_COOKIE_HTTPONLY = False
+CSRF_COOKIE_SECURE = False
+SESSION_COOKIE_SAMESITE = 'None'
+CSRF_COOKIE_SAMESITE = 'None'
+SESSION_COOKIE_PATH = '/api'
+CSRF_COOKIE_PATH = '/api'
+#Previene acceso por JavaScript solo dejo esta en false 
+
+CSRF_TRUSTED_ORIGINS = ['http://localhost:5173','https://hotel-rouge-iota.vercel.app', 'https://hotel-1-o3hc.onrender.com']
 #1 semana, en segundos
 SESSION_COOKIE_AGE = 604800
 
@@ -168,8 +174,30 @@ SPECTACULAR_SETTINGS = {
 #Configuración de CORS
 CORS_ALLOW_CREDENTIALS = True
 #CORS_ALLOW_ALL_ORIGINS = True
-CORS_ALLOWED_ORIGINS = [os.getenv("CORS_ALLOWED_ORIGINS"),]
-
+CORS_ALLOWED_ORIGINS = [
+    'http://localhost:5173',
+    'https://hotel-rouge-iota.vercel.app',
+    'https://hotel-rama-omar3.vercel.app',
+     'https://hotel-1-o3hc.onrender.com'
+]
+#exponer estos valores
+CORS_EXPOSE_HEADERS = [
+    'Date',
+    'Content-Type',
+    'CF-Ray',
+    'CF-Cache-Status',
+    'Allow',
+    'Set-Cookie',
+    'Vary',
+    'Cross-Origin-Opener-Policy',
+    'Referrer-Policy',
+    'RNDR-ID',
+    'X-Content-Type-Options',
+    'X-Frame-Options',
+    'X-Render-Origin-Server',
+    'Server',
+    'Alt-Svc',
+]
 #Configuración de Cloudinay
 CLOUDINARY_STORAGE = {
     'CLOUD_NAME': os.getenv('CLOUD_NAME'),
