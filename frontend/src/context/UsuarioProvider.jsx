@@ -11,7 +11,9 @@ export const UsuarioProvider = ({ children }) => {
  
   const [usuario, setUsuario] = useState({});
   const axiosInstance = axios.create({
-    baseURL: import.meta.env.VITE_API_URL,
+    baseURL: `${import.meta.env.VITE_API_URL}`,
+    // baseURL: import.meta.env.VITE_API_URL,
+    // baseURL: '/api',
     headers: {
       'Content-Type': 'application/json',
        'accept': "*/*",
@@ -52,8 +54,8 @@ export const UsuarioProvider = ({ children }) => {
         }
       );
       console.log(response.data);
-      console.log(document.cookie);
-      console.log(Cookies.get('csrftoken'));
+ 
+
       const data = {
         "username": userData.usuario,
         "password": userData.password,
@@ -72,7 +74,15 @@ export const UsuarioProvider = ({ children }) => {
   };
 
   const logout = async () => {
-    console.log(import.meta.env.VITE_API_URL);
+    console.log(document.cookie);
+    let coki=Cookies.get('csrftoken',{domain:'/',path:'/api'});
+    console.log(coki);
+    coki=Cookies.get('csrftoken',{domain:'localhost',path:'/api'});
+    console.log(coki);
+    coki=Cookies.get('mycookie',{domain:'localhost',path:'/api/api-auth/login-view'});
+    console.log(coki);
+    coki=Cookies.get('mycookie',{domain:'/',path:apiUrl});
+    console.log(coki);
 
     try {
       console.log(document.cookie);
