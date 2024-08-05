@@ -14,7 +14,10 @@ SECRET_KEY = os.getenv('SECRET_KEY')
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = os.getenv('DEBUG')
 
-ALLOWED_HOSTS = [os.getenv('ALLOWED_HOSTS'),]
+ALLOWED_HOSTS = 'http://localhost:5173',
+    'https://hotel-rouge-iota.vercel.app',
+    'https://hotel-rama-omar3.vercel.app',
+     'https://hotel-1-o3hc.onrender.com']
 
 # Application definition
 BASE_APPS = [
@@ -154,7 +157,7 @@ SESSION_COOKIE_SAMESITE = 'None'
 CSRF_COOKIE_SAMESITE = 'None'
 #Previene acceso por JavaScript solo dejo esta en false 
 
-CSRF_TRUSTED_ORIGINS = ['http://localhost:5173','https://hotel-rouge-iota.vercel.app']
+CSRF_TRUSTED_ORIGINS = ['http://localhost:5173','https://hotel-rouge-iota.vercel.app', 'https://hotel-1-o3hc.onrender.com']
 #1 semana, en segundos
 SESSION_COOKIE_AGE = 604800
 
@@ -178,7 +181,24 @@ CORS_ALLOWED_ORIGINS = [
     'https://hotel-rama-omar3.vercel.app',
      'https://hotel-1-o3hc.onrender.com'
 ]
-
+#exponer estos valores
+CORS_EXPOSE_HEADERS = [
+    'Date',
+    'Content-Type',
+    'CF-Ray',
+    'CF-Cache-Status',
+    'Allow',
+    'Set-Cookie',
+    'Vary',
+    'Cross-Origin-Opener-Policy',
+    'Referrer-Policy',
+    'RNDR-ID',
+    'X-Content-Type-Options',
+    'X-Frame-Options',
+    'X-Render-Origin-Server',
+    'Server',
+    'Alt-Svc',
+]
 #Configuración de Cloudinay
 CLOUDINARY_STORAGE = {
     'CLOUD_NAME': os.getenv('CLOUD_NAME'),
