@@ -13,8 +13,8 @@ class ClientViewSet(ModelViewSet):
     queryset = Client.active_objects.all()
     http_method_names = ['get', 'post', 'put', 'delete']
     pagination_class = CustomPagination
-    permission_clases= [os.getenv("ACTIVATE_PERMISSION")]
-    #permission_classes = [IsAuthenticated]
+   
+    permission_classes = [IsAuthenticated]
     
     # Sistema de filtros
     filter_backends = [filters.SearchFilter]
